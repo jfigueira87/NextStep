@@ -1,27 +1,83 @@
-
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Register() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState(false); // Estado para el mensaje de éxito
+  const navigate = useNavigate(); // Hook para la navegación
+
+  const validateForm = (e) => {
+    e.preventDefault();
+    let validationErrors = {};
+    
+    // Validación del nombre
+    if (!name) {
+      validationErrors.name = "El nombre es obligatorio";
+    }
+
+    // Validación del email
+    if (!email) {
+      validationErrors.email = "El email es obligatorio";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      validationErrors.email = "El email no es válido";
+    }
+
+    // Validación de la contraseña
+    if (!password) {
+      validationErrors.password = "La contraseña es obligatoria";
+    } else if (password.length < 6) {
+      validationErrors.password = "La contraseña debe tener al menos 6 caracteres";
+    }
+
+    // Validación de confirmación de contraseña
+    if (password !== confirmPassword) {
+      validationErrors.confirmPassword = "Las contraseñas no coinciden";
+    }
+
+    if (Object.keys(validationErrors).length === 0) {
+      // Si no hay errores, mostrar mensaje de éxito y redirigir
+      setSuccessMessage(true);
+      setTimeout(() => {
+        navigate('/chatbot'); // Redirigir a la página del chatbot
+      }, 2000); // Esperar 2 segundos antes de redirigir
+    } else {
+      setErrors(validationErrors);
+    }
+  };
+
   return (
     <> 
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-gray-900">Registro</h2>
-        <img className="mx-auto h-60 w-auto" src={require('../assets/images/logoNextstep.png')} alt="Company logo" />
+          <h2 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-gray-900">Registro</h2>
+          <img className="mx-auto h-60 w-auto" src={require('../assets/images/logoNextstep.png')} alt="Company logo" />
         </div>
-        <h2 className="mt-10 text-center text-xl font-bold leading-9 tracking-tight text-gray-900">Registrate si aún no tienes una cuenta.</h2>
+        <h2 className="mt-10 text-center text-xl font-bold leading-9 tracking-tight text-gray-900">Regístrate si aún no tienes una cuenta.</h2>
+        
+        {successMessage && (
+          <div className="mt-4 text-center text-green-500">
+            Te has registrado con éxito. Redirigiendo a la página del chatbot...
+          </div>
+        )}
+
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" onSubmit={validateForm}>
             <div>
               <input 
                 id="name" 
                 name="name" 
                 type="text" 
                 placeholder="Ingresa tu nombre" 
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 required 
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
+              {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
             </div>
 
             <div>
@@ -30,9 +86,12 @@ function Register() {
                 name="email" 
                 type="email" 
                 placeholder="Ingresa tu email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required 
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
+              {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
             </div>
 
             <div>
@@ -41,9 +100,12 @@ function Register() {
                 name="password" 
                 type="password" 
                 placeholder="Ingresa una contraseña" 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required 
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
+              {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
             </div>
 
             <div>
@@ -52,24 +114,26 @@ function Register() {
                 name="confirm-password" 
                 type="password" 
                 placeholder="Confirma tu contraseña" 
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 required 
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
+              {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
             </div>
 
-              <button 
-    type="submit" 
-    className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-bold leading-6" 
-    style={{ backgroundColor: '#B0EFFF', color: '#054D41' }} // Cambiamos el color del texto aquí
-  >
-    Reservar Cita
-  </button>
-
+            <button 
+              type="submit" 
+              className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-bold leading-6" 
+              style={{ backgroundColor: '#B0EFFF', color: '#054D41' }}
+            >
+              Registrarse
+            </button>
 
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-            O registrate con:
+            O regístrate con:
           </p>
           <div className="flex justify-center space-x-4 mt-6">
             <img
@@ -99,4 +163,4 @@ function Register() {
   )
 }
 
-export default Register
+export default Register;
