@@ -74,10 +74,22 @@ function Booking() {
           <p className="mt-10 text-center text-sm text-gray-500">
             O registrate con:
           </p>
-          <div className="flex justify-center gap-2">
-            <img src="src/assets/images/google.png" alt="Google" />
-            <img src="src/assets/images/facebook.png" alt="Facebook" />
-            <img src="src/assets/images/twitter.png" alt="Twitter" />
+          <div className="flex justify-center space-x-4 mt-6">
+            <img
+              src={require('../assets/images/logoGoogle.png')}
+              alt="Google"
+              className="w-12 h-12 rounded-full shadow-lg hover:scale-110 transition-transform duration-200"
+            />
+            <img
+              src={require('../assets/images/logoFacebook.png')}
+              alt="Facebook"
+              className="w-12 h-12 rounded-full shadow-lg hover:scale-110 transition-transform duration-200"
+            />
+            <img
+              src={require('../assets/images/logoTwitter.png')}
+              alt="Twitter"
+              className="w-12 h-12 rounded-full shadow-lg hover:scale-110 transition-transform duration-200"
+            />
           </div>
 
           <p className="mt-10 text-center text-sm text-gray-500">
