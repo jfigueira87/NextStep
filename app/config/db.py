@@ -5,7 +5,6 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import NullPool
-from decouple import config
 from logger import Logs
 import os
 from dotenv import load_dotenv
@@ -20,8 +19,9 @@ try:
     password = os.getenv("PASSWORD")
     db = os.getenv("DB")
     port = os.getenv("PORT")
+    url = os.getenv("DATABASE_URL")
 
-    url = f"postgresql+asyncpg://{user}:{password}@{host}:{port}/{db}"
+    #url = f"postgresql+asyncpg://{user}:{password}@{host}:{port}/{db}"
    
     
 
