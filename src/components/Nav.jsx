@@ -36,7 +36,7 @@ const Nav = () => {
                         Orientador Virtual
                     </NavLink>
                     <NavLink
-                        to="/logout"
+                        to="/"
                         className="text-black transition-transform duration-300 ease-in-out hover:scale-105 hover:text-gray-600"
                     >
                         Cerrar sesión
