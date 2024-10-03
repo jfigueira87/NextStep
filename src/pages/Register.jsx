@@ -59,10 +59,14 @@ function Register() {
         alt="Ellipse Green"
         className="absolute top-0 right-0"
       />
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-gray-900">Registro</h2>
-          <img className="mx-auto h-60 w-auto" src={require('../assets/images/logoNextstep.png')} alt="Company logo" />
-        </div>
+        <div className="absolute top-0 left-0 flex items-center m-8">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mr-4">Acceso</h2>
+        <img
+          src={require('../assets/images/User.png')}
+          alt="User"
+          className="w-5 h-5 sm:w-6 sm:h-6"
+        />
+      </div>
         <h2 className="mt-10 text-center text-xl font-bold leading-9 tracking-tight text-gray-900">Regístrate si aún no tienes una cuenta.</h2>
         
         {successMessage && (
