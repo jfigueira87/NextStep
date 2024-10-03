@@ -1,0 +1,145 @@
+{
+    "registerUsers": [
+      {
+        "id": 1,
+        "name": "Laura García",
+        "email": "laura.garcia@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 2,
+        "name": "Carlos Pérez",
+        "email": "carlos.perez@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 3,
+        "name": "Ana Martínez",
+        "email": "ana.martinez@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 4,
+        "name": "David López",
+        "email": "david.lopez@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 5,
+        "name": "Lucía Sánchez",
+        "email": "lucia.sanchez@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 6,
+        "name": "Sergio Fernández",
+        "email": "sergio.fernandez@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 7,
+        "name": "Marta Gómez",
+        "email": "marta.gomez@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 8,
+        "name": "Javier Ruiz",
+        "email": "javier.ruiz@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 9,
+        "name": "Elena Torres",
+        "email": "elena.torres@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 10,
+        "name": "Mario Díaz",
+        "email": "mario.diaz@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 11,
+        "name": "Claudia Jiménez",
+        "email": "claudia.jimenez@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 12,
+        "name": "Iván Muñoz",
+        "email": "ivan.munoz@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 13,
+        "name": "Sara Romero",
+        "email": "sara.romero@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 14,
+        "name": "Raúl Molina",
+        "email": "raul.molina@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 15,
+        "name": "Cristina Ortega",
+        "email": "cristina.ortega@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 16,
+        "name": "Fernando Castro",
+        "email": "fernando.castro@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 17,
+        "name": "Laura Moreno",
+        "email": "laura.moreno@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 18,
+        "name": "Antonio Rubio",
+        "email": "antonio.rubio@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 19,
+        "name": "Patricia Rivas",
+        "email": "patricia.rivas@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      },
+      {
+        "id": 20,
+        "name": "Andrés Blanco",
+        "email": "andres.blanco@example.com",
+        "password": "password123",
+        "confirmedPassword": "password123"
+      }
+    ]
+  }
+  
