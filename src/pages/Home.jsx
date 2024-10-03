@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import '../index.css';
 
 function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     setEmail('');
@@ -44,12 +45,14 @@ function Home() {
       });
       return;
     }
-    
+
     Swal.fire({
       title: 'Éxito',
       text: 'Login correcto',
       icon: 'success',
       confirmButtonText: 'Aceptar',
+    }).then(() => {
+      navigate('/chatbot');
     });
   };
 
@@ -59,19 +62,19 @@ function Home() {
   };
 
   return (
-    <div className="relative min-h-screen bg-white">      
+    <div className="relative min-h-screen bg-white">
       <img
         src={require('../assets/images/ellipseMobileBlue.png')}
         alt="Ellipse Blue"
         className="absolute top-0 left-0"
       />
-      
+
       <img
         src={require('../assets/images/ellipseMobileGreen.png')}
         alt="Ellipse Green"
         className="absolute top-0 right-0"
       />
-      
+
       <div className="absolute top-0 left-0 flex items-center m-8">
         <h2 className="text-2xl font-bold text-gray-900 mr-4">Acceso</h2>
         <img
@@ -89,7 +92,7 @@ function Home() {
             alt="Company logo"
           />
         </div>
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">          
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSubmit} noValidate>
             <div>
               <input
@@ -158,5 +161,6 @@ function Home() {
 }
 
 export default Home;
+
 
 
