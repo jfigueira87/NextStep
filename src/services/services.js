@@ -1,13 +1,21 @@
-//Relleno de prueba para que no esté vacío
+import axios from "axios"; 
 
-import axios from "axios";
-const URL_API = "http://localhost:8000/meme";
-const URL_STORAGE = "https://api.cloudinary.com/v1_1/dz53okn10/image/upload";
 
-//Get all memes -- GET
-export async function getAllMemes() {
+export const URL = 'http://localhost:3000/nextstep'; 
+
+
+export const postRegisterData = async (data) => {
   try {
-    const response = await axios.get(URL_API);
+      const response = await axios.post(URL, data);
+      return response.data
+  } catch (error) {
+      console.error('Error al registrarte:', error);
+      throw error;
+  }
+}
+export async function getAllusers() {
+  try {
+    const response = await axios.get(URL);
     return response.data;
   } catch (error) {
     console.error('Error en la solicitud:', error);
