@@ -1,7 +1,7 @@
 import axios from "axios"; 
 
 
-export const URL = 'http://localhost:3000/nextstep'; 
+export const URL = 'http://localhost:4000/registerUsers'; 
 
 
 export const postRegisterData = async (data) => {
