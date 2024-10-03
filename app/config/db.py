@@ -9,41 +9,41 @@ from logger import Logs
 import os
 from dotenv import load_dotenv
 
+# Definir la base para los modelos
+Base = declarative_base()
 
+# Inicializar el logger y cargar las variables de entorno
 logger = Logs()
-load_dotenv() #carga de variables de entorno
+load_dotenv()
 
 try:
+    # Cargar variables de entorno
     user = os.getenv('USER')
-    host= os.getenv("HOST")
+    host = os.getenv("HOST")
     password = os.getenv("PASSWORD")
     db = os.getenv("DB")
     port = os.getenv("PORT")
     url = os.getenv("DATABASE_URL")
 
-    #url = f"postgresql+asyncpg://{user}:{password}@{host}:{port}/{db}"
-   
+    # Si no existe una URL en las variables de entorno, formatearla manualmente
+    if not url:
+        url = f"postgresql+asyncpg://{user}:{password}@{host}:{port}/{db}"
     
-
-    # Conection with data base... Data base is called 
+    # Crear el motor de base de datos asíncrono
     engine = create_async_engine(url, poolclass=NullPool)
-  
-    # MetaData act like a container to save the information on the tables, columns
-    # relaciones y otros elementos de la base de datos. Se utiliza para definir y manipular estructuras de la base de datos en SQLAlchemy.
+
+    # MetaData actúa como un contenedor para la información sobre las tablas, columnas, etc.
     meta = MetaData()
 
+    # Crear la sesión asíncrona
     Session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
-    
-    Base = declarative_base()
 
-    async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
-        async with Session() as session:
-                yield session
-
-    
 except SQLAlchemyError as e:
+    # Manejar errores de conexión
     logger.error("Error to connect database:")
     print(f"Database connection Error: {e}")
-    
-    
-    
+
+# Definir la función para obtener una sesión asíncrona fuera del bloque try-except
+async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
+    async with Session() as session:
+        yield session
