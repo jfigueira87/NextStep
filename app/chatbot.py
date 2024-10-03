@@ -1,4 +1,7 @@
 import os
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_groq import ChatGroq
 from langchain.chains import LLMChain
@@ -6,6 +9,17 @@ from dotenv import load_dotenv
 
 # Cargar variables de entorno
 load_dotenv()
+
+app = FastAPI()
+
+# Configurar CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Permite todos los orígenes
+    allow_credentials=True,
+    allow_methods=["*"],  # Permite todos los métodos
+    allow_headers=["*"],  # Permite todos los headers
+)
 
 CAREER_DATABASE = {
     'Ingeniería': ['Matemáticas', 'Lógica', 'Resolución de problemas', 'Tecnología', 'Innovación'],
@@ -56,6 +70,14 @@ SALARY_RANGES = {
     }
 }
 
+class ChatInput(BaseModel):
+    message: str
+    context: str = ""
+
+class ChatOutput(BaseModel):
+    response: str
+    is_final_recommendation: bool = False
+
 def recomendar_carrera(user_profile):
     career_scores = {career: 0 for career in CAREER_DATABASE}
     
@@ -83,7 +105,7 @@ def recomendar_carrera(user_profile):
     else:
         return "No se encontró una recomendación clara. Considera explorar más opciones o hablar con un orientador profesional."
 
-def chatbot_vocacional():
+def initialize_chatbot():
     api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
         raise ValueError("La clave API de Groq no está configurada. Por favor, configura la variable de entorno GROQ_API_KEY.")
@@ -93,19 +115,6 @@ def chatbot_vocacional():
         api_key=api_key,
         model="llama3-70b-8192"
     )
-
-    preguntas = [
-        "¿Cuáles son tus asignaturas favoritas y por qué te interesan?",
-        "¿En qué actividades o tareas prácticas sientes que destacas?",
-        "¿Qué valores personales consideras importantes en tu futura carrera profesional?",
-        "Describe tu ambiente de trabajo ideal. ¿Prefieres trabajar en equipo o de forma individual?",
-        "¿Qué expectativas tienes en cuanto al salario en tu futura profesión?",
-        "¿Estás dispuesto a realizar estudios universitarios largos o prefieres una formación más corta y práctica?",
-        "¿Tienes hobbies o intereses extracurriculares que te gustaría relacionar con tu carrera?",
-        "¿Has tenido alguna experiencia laboral, de voluntariado o proyecto personal significativo? ¿Qué aprendiste de ello?",
-        "¿Qué habilidades blandas (como comunicación, liderazgo, resolución de problemas) consideras que son tus puntos fuertes?",
-        "¿Cómo te ves profesionalmente en 5-10 años? ¿Qué metas te gustaría alcanzar?"
-    ]
 
     system = """
     Eres un chatbot especializado en orientación laboral para jóvenes. Tu tarea es realizar una serie de preguntas predefinidas 
@@ -117,22 +126,49 @@ def chatbot_vocacional():
     """
 
     prompt = ChatPromptTemplate.from_messages([("system", system), ("human", "{pregunta}")])
-    llm_chain = LLMChain(llm=llm, prompt=prompt)
+    return LLMChain(llm=llm, prompt=prompt)
 
-    user_profile = ""
-    
-    print("¡Bienvenido al chatbot de orientación vocacional! Voy a hacerte 10 preguntas para conocer tus intereses, habilidades y aspiraciones profesionales.")
+llm_chain = initialize_chatbot()
 
-    for i, pregunta_base in enumerate(preguntas, 1):
-        pregunta_adaptada = llm_chain.predict(pregunta=pregunta_base)
-        print(f"\nPregunta {i}: {pregunta_adaptada}")
+preguntas = [
+    "¿Cuáles son tus asignaturas favoritas y por qué te interesan?",
+    "¿En qué actividades o tareas prácticas sientes que destacas?",
+    "¿Qué valores personales consideras importantes en tu futura carrera profesional?",
+    "Describe tu ambiente de trabajo ideal. ¿Prefieres trabajar en equipo o de forma individual?",
+    "¿Qué expectativas tienes en cuanto al salario en tu futura profesión?",
+    "¿Estás dispuesto a realizar estudios universitarios largos o prefieres una formación más corta y práctica?",
+    "¿Tienes hobbies o intereses extracurriculares que te gustaría relacionar con tu carrera?",
+    "¿Has tenido alguna experiencia laboral, de voluntariado o proyecto personal significativo? ¿Qué aprendiste de ello?",
+    "¿Qué habilidades blandas (como comunicación, liderazgo, resolución de problemas) consideras que son tus puntos fuertes?",
+    "¿Cómo te ves profesionalmente en 5-10 años? ¿Qué metas te gustaría alcanzar?"
+]
 
-        user_input = input("Tu respuesta: ")
-        user_profile += " " + user_input
+@app.post("/chat")
+async def chat(input: ChatInput):
+    try:
+        # Determinar la pregunta actual basada en el contexto
+        pregunta_index = len(input.context.split("\n")) if input.context else 0
+        
+        if pregunta_index >= len(preguntas):
+            # Si ya se han hecho todas las preguntas, dar la recomendación final
+            recomendacion = recomendar_carrera(input.context + "\n" + input.message)
+            return ChatOutput(response=recomendacion, is_final_recommendation=True)
 
-    print("\nGracias por compartir tu información. Basado en tus respuestas, aquí está mi recomendación:")
-    recomendacion = recomendar_carrera(user_profile)
-    print(recomendacion)
+        # Actualizar el contexto con la respuesta del usuario
+        updated_context = input.context + "\n" + input.message if input.context else input.message
+
+        # Generar la siguiente pregunta
+        pregunta_actual = preguntas[pregunta_index]
+        pregunta_adaptada = llm_chain.predict(pregunta=pregunta_actual)
+
+        return ChatOutput(response=pregunta_adaptada, is_final_recommendation=False)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/")
+async def root():
+    return {"message": "Bienvenido al chatbot de orientación vocacional"}
 
 if __name__ == "__main__":
-    chatbot_vocacional()
+    import uvicorn
+    uvicorn.run(app, host="localhost", port=8000)
