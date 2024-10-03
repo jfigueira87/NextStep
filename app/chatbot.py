@@ -7,30 +7,8 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from router import carrera_router
 from router import usuario_router
-import uvicorn
+
 from config.db import Base, engine
-
-
-app = FastAPI()
-
-# endpoints incorporated in API
-app.include_router(usuario_router.router)
-app.include_router(carrera_router.router)
-
-
-# function to create all tables in the database if they do not exist
-@app.on_event("startup")
-async def on_startup():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-        # Ensure the database tables are created using Base - declarative_base instance
-
-
-# uvicorn app:chatbot --host localhost --port 5000 --reload
-if __name__ == "__chatbot__":
-    uvicorn.run("chatbot:app", host="localhost", port=5000, reload=True)
-
-
 
 
 # Cargar variables de entorno
