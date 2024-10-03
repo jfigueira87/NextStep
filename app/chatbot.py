@@ -5,74 +5,73 @@ from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
 from dotenv import load_dotenv
 
-# Modelo que asigna carreras a perfiles de usuarios (aquí podrías usar un modelo más avanzado)
+# Cargar variables de entorno
+load_dotenv()
+
 CAREER_DATABASE = {
-    'Ingeniería': ['Matemáticas', 'Lógica', 'Creatividad'],
-    'Medicina': ['Ciencias Naturales', 'Empatía', 'Trabajo bajo presión'],
-    'Marketing': ['Comunicación', 'Creatividad', 'Negocios'],
-    # Añadir más carreras con sus habilidades correspondientes
+    'Ingeniería': ['Matemáticas', 'Lógica', 'Creatividad', 'Resolución de problemas', 'Tecnología'],
+    'Medicina': ['Ciencias Naturales', 'Empatía', 'Trabajo bajo presión', 'Atención al detalle', 'Salud'],
+    'Marketing': ['Comunicación', 'Creatividad', 'Negocios', 'Análisis de mercado', 'Redes sociales'],
+    'Ciencias de la Computación': ['Lógica', 'Resolución de problemas', 'Programación', 'Innovación', 'Tecnología'],
+    'Psicología': ['Empatía', 'Comunicación', 'Observación', 'Análisis del comportamiento', 'Salud mental'],
+    'Administración de Empresas': ['Liderazgo', 'Organización', 'Negocios', 'Toma de decisiones', 'Finanzas'],
+    'Diseño Gráfico': ['Creatividad', 'Diseño', 'Tecnología', 'Comunicación visual', 'Arte'],
+    'Periodismo': ['Comunicación', 'Investigación', 'Escritura', 'Pensamiento crítico', 'Actualidad']
 }
 
 def recomendar_carrera(user_profile):
-    """
-    Recomendador simple que sugiere una carrera basada en el perfil del usuario.
-    """
+    career_scores = {career: 0 for career in CAREER_DATABASE}
+    
     for career, skills in CAREER_DATABASE.items():
-        if any(skill in user_profile for skill in skills):
-            return career
-    return "No se encontró una recomendación clara. Por favor, responde más preguntas."
+        for skill in skills:
+            if skill.lower() in user_profile.lower():
+                career_scores[career] += 1
+    
+    top_careers = sorted(career_scores.items(), key=lambda x: x[1], reverse=True)[:3]
+    
+    if top_careers[0][1] > 0:
+        recommendations = [f"{career} (coincidencia: {score})" for career, score in top_careers if score > 0]
+        return f"Basado en tu perfil, te recomiendo considerar estas carreras: {', '.join(recommendations)}"
+    else:
+        return "No se encontró una recomendación clara. Considera explorar más opciones o hablar con un orientador profesional."
 
-def chatbot_vocacional(user_input):
-    # Cargar variables de entorno
-    load_dotenv()
-
-    # Obtener clave API para el modelo de lenguaje
+def chatbot_vocacional():
     api_key = os.getenv("GROQ_API_KEY")
+    if not api_key:
+        raise ValueError("La clave API de Groq no está configurada. Por favor, configura la variable de entorno GROQ_API_KEY.")
 
-    # Configurar LLM
     llm = ChatGroq(
-        temperature=0.7,  # Más creativo para recomendaciones
+        temperature=0.7,
         api_key=api_key,
         model="llama3-70b-8192"
     )
 
-    # Definir mensajes para la conversación vocacional
     system = """
-    Eres un chatbot especializado en orientación vocacional. 
-    Tu tarea es realizar preguntas para descubrir los intereses y habilidades del usuario, 
-    y luego recomendarle carreras profesionales o áreas de estudio basadas en esa información.
+    Eres un chatbot especializado en orientación vocacional. Tu tarea es realizar 5 preguntas específicas para descubrir 
+    los intereses, habilidades y valores del usuario. Haz preguntas relevantes y variadas para obtener una visión amplia 
+    del perfil del usuario. Después de cada respuesta del usuario, haz la siguiente pregunta sin proporcionar análisis 
+    o recomendaciones intermedias. Limítate a hacer las preguntas de manera clara y concisa.
     """
 
-    # Prompt adaptativo con el input del usuario
-    human = "{text}"
+    human = "Comienza la entrevista de orientación vocacional haciendo tu primera pregunta."
     prompt = ChatPromptTemplate.from_messages([("system", system), ("human", human)])
 
-    # Memoria para guardar el contexto de la conversación
-    memory = ConversationBufferMemory()
+    llm_chain = LLMChain(llm=llm, prompt=prompt)
 
-    # Crear una cadena de LLM para el proceso
-    llm_chain = prompt | llm
+    user_profile = ""
+    
+    print("¡Bienvenido al chatbot de orientación vocacional! Voy a hacerte 5 preguntas para conocer tus intereses y habilidades.")
 
-    # Obtener respuesta del chatbot
-    response = llm_chain.invoke(user_input)
+    for i in range(5):
+        response = llm_chain.predict(text=user_profile)
+        print(f"\nPregunta {i+1}: {response}")
 
-    # Simulación de la lógica para recomendar carrera según la respuesta
-    carrera_recomendada = recomendar_carrera(response.content)
+        user_input = input("Tu respuesta: ")
+        user_profile += " " + user_input
 
-    return carrera_recomendada
+    print("\nGracias por compartir tu información. Basado en tus respuestas, aquí está mi recomendación:")
+    carrera_recomendada = recomendar_carrera(user_profile)
+    print(carrera_recomendada)
 
 if __name__ == "__main__":
-    while True:
-        # Obtener input del usuario
-        user_input = input("¿Cuáles son tus intereses y habilidades? (por favor, responde en español o escribe 'salir' para terminar): ")
-        
-        if user_input.lower() == 'salir':
-            break
-
-        # Generar recomendación vocacional
-        carrera_recomendada = chatbot_vocacional(user_input)
-        
-        # Mostrar la recomendación
-        print("Recomendación de carrera:")
-        print(carrera_recomendada)
-
+    chatbot_vocacional()
