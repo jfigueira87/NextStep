@@ -2,6 +2,9 @@
 
 ¡Bienvenido a NextStep, una plataforma innovadora de orientación vocacional! 🌟 Este proyecto está diseñado para ayudar a jóvenes de 18 a 24 años a elegir o redefinir su carrera profesional a través de un chatbot interactivo basado en inteligencia artificial.
 
+![](src/assets/images/imagen_readme.png)
+
+
 ## 📋 Descripción del Proyecto
 
 NextStep aborda una problemática crítica en España: la alta tasa de abandono escolar, especialmente entre los jóvenes de 18 a 24 años. Muchos jóvenes eligen carreras sin tener suficiente información sobre sus intereses, los rangos salariales de sus futuros empleos, y la oferta y demanda del mercado laboral. Este desconocimiento puede llevar a decisiones inadecuadas y, en última instancia, al abandono de sus estudios.
