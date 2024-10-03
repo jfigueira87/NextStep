@@ -19,7 +19,7 @@ const Chatbot = () => {
                         className="w-[50%] absolute right-0 top-0"
                     />
                 </div>
-                <div className="w-full mt-[7%] px-8 mb-[4%] text-center font-outfit text-lg md:text-xl lg:text-2xl p-4">
+                <div className="w-full  px-8 mb-4 mt-20 text-center font-outfit text-lg md:text-xl lg:text-2xl p-4">
                     {' '}
                     <p className="p-4 text-l">
                         ¿Listo para descubrir tu verdadera vocación y
