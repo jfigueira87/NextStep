@@ -10,7 +10,6 @@ function Register() {
 
   const onSubmit = async (data) => {
     try {
-
       if (data.password !== data.confirmPassword) {
         Swal.fire({
           icon: 'error',
@@ -19,19 +18,26 @@ function Register() {
         });
         return;
       }
-
-      await postRegisterData(data);
-
+  
+      const userData = {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        confirmedPassword: data.confirmPassword,
+      };
+  
+      const response = await postRegisterData(userData);
+  
       Swal.fire({
         icon: 'success',
         title: 'Te has registrado con éxito',
         showConfirmButton: false,
         timer: 2000, 
       });
-
+  
       setTimeout(() => {
-        navigate('/chatbot'); 
-      }, 2000); 
+        navigate('/chatbot');
+      }, 2000);
     } catch (error) {
       console.error('Error al registrarse', error);
       Swal.fire({
@@ -41,7 +47,7 @@ function Register() {
       });
     }
   };
-
+  
   return (
     <> 
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -64,7 +70,8 @@ function Register() {
             className="w-5 h-5 sm:w-6 sm:h-6"
           />
         </div>
-        <h2 className="mt-10 text-center text-xl font-bold leading-9 tracking-tight text-gray-900">Regístrate si aún no tienes una cuenta.</h2>
+        
+        <h2 className="mt-28 mb-2 text-center text-xl font-bold leading-9 tracking-tight text-gray-900">Regístrate si aún no tienes una cuenta.</h2>
         
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
@@ -153,7 +160,7 @@ function Register() {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             ¿Ya tienes una cuenta?
-            <Link to="Home/" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Entrar</Link>
+            <Link to="/" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Entrar</Link>
           </p>
         </div>
       </div>
