@@ -1,64 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { useForm } from 'react-hook-form';
+import { getAllusers } from '../services/services.js'; 
 import '../index.css';
 
 function Home() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const navigate = useNavigate();
 
   useEffect(() => {
-    setEmail('');
-    setPassword('');
-  }, []);
+    reset(); // Resetear el formulario al montar el componente
+  }, [reset]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
+    const { email, password } = data;
 
-    if (!email) {
+    try {
+      const users = await getAllusers();
+      const user = users.find(user => user.email === email && user.password === password);
+
+      if (user) {
+        Swal.fire({
+          title: 'Éxito',
+          text: 'Login correcto',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+        }).then(() => {
+          navigate('/chatbot');
+        });
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: 'Usuario o contraseña incorrectos.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+        });
+      }
+    } catch (error) {
+      console.error('Error en el login:', error);
       Swal.fire({
-        title: 'Campo Obligatorio',
-        text: 'Debe introducir un email de contacto.',
+        title: 'Error',
+        text: 'Ocurrió un error al intentar iniciar sesión.',
         icon: 'error',
         confirmButtonText: 'Aceptar',
       });
-      return;
     }
-
-    if (!validateEmail(email)) {
-      Swal.fire({
-        title: 'Email inválido',
-        text: 'Por favor ingresa un email válido.',
-        icon: 'error',
-        confirmButtonText: 'Aceptar',
-      });
-      return;
-    }
-
-    if (!password) {
-      Swal.fire({
-        title: 'Campo Obligatorio',
-        text: 'Por favor ingresa tu contraseña.',
-        icon: 'error',
-        confirmButtonText: 'Aceptar',
-      });
-      return;
-    }
-
-    Swal.fire({
-      title: 'Éxito',
-      text: 'Login correcto',
-      icon: 'success',
-      confirmButtonText: 'Aceptar',
-    }).then(() => {
-      navigate('/chatbot');
-    });
-  };
-
-  const validateEmail = (email) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(String(email).toLowerCase());
   };
 
   return (
@@ -68,7 +55,6 @@ function Home() {
         alt="Ellipse Blue"
         className="absolute top-0 left-0"
       />
-
       <img
         src={require('../assets/images/ellipseMobileGreen.png')}
         alt="Ellipse Green"
@@ -93,29 +79,32 @@ function Home() {
           />
         </div>
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={handleSubmit} noValidate>
+          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)} noValidate>
             <div>
               <input
-                id="email"
-                name="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                {...register('email', {
+                  required: 'Campo Obligatorio',
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: 'Email inválido',
+                  },
+                })}
                 placeholder="Ingresa tu email"
-                className="block w-full rounded-md border-0 pl-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className={`block w-full rounded-md border-0 pl-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.email ? 'border-red-500' : ''}`}
               />
+              {/* Mensaje de error para el email */}
+              {errors.email && <p className="text-red-600">{errors.email.message}</p>}
             </div>
 
             <div>
               <input
-                id="password"
-                name="password"
+                {...register('password', { required: 'Campo Obligatorio' })}
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Ingresa tu contraseña"
-                className="block w-full rounded-md border-0 pl-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className={`block w-full rounded-md border-0 pl-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.password ? 'border-red-500' : ''}`}
               />
+              {/* Mensaje de error para la contraseña */}
+              {errors.password && <p className="text-red-600">{errors.password.message}</p>}
             </div>
 
             <div>
@@ -150,7 +139,7 @@ function Home() {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             ¿Ya tienes una cuenta?
-            <Link to="Home /" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            <Link to="/home" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
               Entrar
             </Link>
           </p>
@@ -161,6 +150,3 @@ function Home() {
 }
 
 export default Home;
-
-
-
