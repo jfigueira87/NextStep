@@ -41,3 +41,7 @@ langchain-groq==0.2.0
 pandas==2.2.3
 Pillow==10.4.0
 streamlit==1.39.0
+langchain-groq
+langchain==0.3.1
+langchain-core==0.3.8
+langchain-text-splitters==0.3.0
