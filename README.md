@@ -27,19 +27,9 @@ NextStep busca reducir la tasa de abandono escolar en España al ofrecer informa
 
 ## 🚀 Tecnologías Utilizadas
 
-- **IA**
-- **Procesamiento de lenguaje natural (NLP)**
-- **Phyton**
-- **HTML**
-- **Tailwind**
-- **Javascript**
-- **React**
-- **React Router**
-- **React Hooks**
-- **Node.js**
-- **Axios**
-- **json-server**
-
+- **IA y machine learning**: Para análisis de perfiles y recomendaciones personalizadas.
+- **Procesamiento de lenguaje natural (NLP)**: Para interacciones fluidas con el chatbot.
+- **Plataforma Web/Móvil**: NextStep estará disponible como una plataforma accesible desde dispositivos móviles y ordenadores.
 
 ## 📋 Requisitos Previos
 
@@ -86,4 +76,3 @@ Abre tu navegador en http://localhost:3000 para interactuar con NextStep y explo
 - Aplicación móvil para una experiencia de usuario más fluida.
 - Registro de usuario y login con conexión a una base de datos real.
 - Avatar 3D interactivo con el que podrás dialogar para una experiencia más inmersiva.
-- Integración de test.
