@@ -25,7 +25,7 @@ const Nav = () => {
                 </div>
                 <div className="hidden md:flex items-center justify-end mr-[4%] space-x-4">
                     <NavLink
-                        to="/"
+                        to="/booking"
                         className="text-black transition-transform duration-300 ease-in-out hover:scale-105 hover:text-gray-600"
                     >
                         Pide tu cita
