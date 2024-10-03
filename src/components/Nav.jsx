@@ -12,14 +12,13 @@ const Nav = () => {
     }
     return (
         <>
-            <nav className="fixed top-0 left-0 right-0 p-1 bg-slate-50 bg-opacity-90 backdrop-blur-sm w-full items-center flex flex-row justify-between z-30">
-                {/* Logo */}
+            <nav className="fixed top-0 left-0 right-0  bg-slate-50 bg-opacity-90 backdrop-blur-sm w-full items-center flex flex-row justify-between z-30">
                 <div className="flex items-center ml-[4%]">
                     <NavLink to="/">
                         <img
-                            src={require('../assets/images/logoNextstep.png')}
+                            src={require('../assets/images/logoNextstepNav.png')}
                             alt="Logo"
-                            className="w-16 h-16"
+                            className="w-24 h-18 my-1"
                         />
                     </NavLink>
                 </div>
@@ -55,7 +54,7 @@ const Nav = () => {
                 </div>
             </nav>
             <div
-                className={`fixed right-0 top-[72px] w-full h-[18vh] bg-blue-200 bg-opacity-80 backdrop-blur-lg text-gray shadow-2xl z-40 transition-all ${
+                className={`fixed right-0 top-[55px] w-full h-[18vh] bg-blue-200 bg-opacity-80 backdrop-blur-lg text-gray shadow-2xl z-40 transition-all ${
                     isMenuOpen
                         ? 'duration-700 ease-in-out'
                         : 'duration-300 ease-in'
@@ -82,7 +81,7 @@ const Nav = () => {
                     </li>
                     <li className="py-1 text-xl text-center">
                         <NavLink
-                            to="/logout"
+                            to="/"
                             className="text-black transition-transform duration-300 ease-in-out transform hover:scale-125 hover:text-gray-600"
                         >
                             Cerrar sesión
