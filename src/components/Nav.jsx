@@ -23,12 +23,18 @@ const Nav = () => {
                         />
                     </NavLink>
                 </div>
-                <div className="hidden md:flex items-center justify-end mr-[4%] space-x-4">
+                <div className="hidden md:flex items-center justify-end gap-7 mr-[4%] space-x-4">
                     <NavLink
                         to="/booking"
                         className="text-black transition-transform duration-300 ease-in-out hover:scale-105 hover:text-gray-600"
                     >
                         Pide tu cita
+                    </NavLink>
+                    <NavLink
+                        to="/chatbot"
+                        className="text-black transition-transform duration-300 ease-in-out hover:scale-105 hover:text-gray-600"
+                    >
+                        Orientador Virtual
                     </NavLink>
                     <NavLink
                         to="/logout"
@@ -49,7 +55,7 @@ const Nav = () => {
                 </div>
             </nav>
             <div
-                className={`fixed right-0 top-[72px] w-full h-[14vh] bg-blue-200 bg-opacity-80 backdrop-blur-lg text-gray shadow-2xl z-40 transition-all ${
+                className={`fixed right-0 top-[72px] w-full h-[18vh] bg-blue-200 bg-opacity-80 backdrop-blur-lg text-gray shadow-2xl z-40 transition-all ${
                     isMenuOpen
                         ? 'duration-700 ease-in-out'
                         : 'duration-300 ease-in'
@@ -60,10 +66,18 @@ const Nav = () => {
                 <ul className="flex flex-col p-4 ">
                     <li className="py-1 text-xl text-center">
                         <NavLink
-                            to="/"
+                            to="/booking"
                             className="text-black transition-transform duration-300 ease-in-out transform hover:scale-125 hover:text-gray-600"
                         >
                             Pide tu cita
+                        </NavLink>
+                    </li>
+                    <li className="py-1 text-xl text-center">
+                        <NavLink
+                            to="/chatbot"
+                            className="text-black transition-transform duration-300 ease-in-out transform hover:scale-125 hover:text-gray-600"
+                        >
+                            Orientador Virtual
                         </NavLink>
                     </li>
                     <li className="py-1 text-xl text-center">
