@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
 import { getAllusers } from '../services/services.js';
 import '../index.css';
+import Button from '../components/Button';
 
 function Home() {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -91,7 +92,7 @@ function Home() {
                 })}
                 placeholder="Ingresa tu email"
                 className={`block w-full rounded-md border-0 pl-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.email ? 'border-red-500' : ''}`}
-              />              
+              />
               {errors.email && <p className="text-red-600">{errors.email.message}</p>}
             </div>
 
@@ -101,18 +102,18 @@ function Home() {
                 type="password"
                 placeholder="Ingresa tu contraseña"
                 className={`block w-full rounded-md border-0 pl-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.password ? 'border-red-500' : ''}`}
-              />              
+              />
               {errors.password && <p className="text-red-600">{errors.password.message}</p>}
             </div>
 
             <div>
-              <button
+              <Button
                 type="submit"
-                className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-bold leading-6"
+                className="w-full"
                 style={{ backgroundColor: '#B0EFFF', color: '#054D41' }}
               >
                 Entrar
-              </button>
+              </Button>
             </div>
           </form>
 

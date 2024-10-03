@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import Nav from '../components/Nav'
 import emailjs from 'emailjs-com'
+import Button from '../components/Button';
 
 function Booking() {
     const [fullName, setFullName] = useState('')
@@ -159,7 +160,7 @@ function Booking() {
                     alt="Ellipse Green"
                     className="absolute top-0 right-0"
                 />
-                
+
                 <h2 className="mt-28 text-center text-xl font-bold leading-9 tracking-tight text-gray-900">
                     Reserva una cita con tu orientador
                 </h2>
@@ -273,12 +274,13 @@ function Booking() {
                         </div>
 
                         <div>
-                            <button
+                            <Button
                                 type="submit"
-                                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                className="w-full"
+                                style={{ backgroundColor: '#B0EFFF', color: '#054D41' }}
                             >
                                 Reservar cita
-                            </button>
+                            </Button>
                         </div>
                     </form>
                 </div>
