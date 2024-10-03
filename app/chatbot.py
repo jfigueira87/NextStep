@@ -12,13 +12,12 @@ load_dotenv()
 
 app = FastAPI()
 
-# Configurar CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Permite todos los orígenes
+    allow_origins=["http://localhost:3000"],  # Adjust this to match your React app's URL
     allow_credentials=True,
-    allow_methods=["*"],  # Permite todos los métodos
-    allow_headers=["*"],  # Permite todos los headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 CAREER_DATABASE = {
@@ -156,6 +155,8 @@ async def chat(input: ChatInput):
 
         # Actualizar el contexto con la respuesta del usuario
         updated_context = input.context + "\n" + input.message if input.context else input.message
+        
+
 
         # Generar la siguiente pregunta
         pregunta_actual = preguntas[pregunta_index]
