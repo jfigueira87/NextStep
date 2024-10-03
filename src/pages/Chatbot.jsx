@@ -7,18 +7,17 @@ const Chatbot = () => {
         <>
             <Nav />
             <section className="flex flex-col items-center justify-center min-h-screen">
-                <div className="relative flex w-full h-auto">
-                    <img
-                        src={require('../assets/images/ellipseMobileBlue.png')}
-                        alt="ellipseBlue"
-                        className="w-[80%] absolute left-0 top-0"
-                    />
-                    <img
-                        src={require('../assets/images/ellipseMobileGreen.png')}
-                        alt="ellipseGreen"
-                        className="w-[50%] absolute right-0 top-0"
-                    />
-                </div>
+                <img
+                    src={require('../assets/images/ellipseMobileBlue.png')}
+                    alt="Ellipse Blue"
+                    className="absolute top-0 left-0"
+                />
+
+                <img
+                    src={require('../assets/images/ellipseMobileGreen.png')}
+                    alt="Ellipse Green"
+                    className="absolute top-0 right-0"
+                />
                 <div className="w-full  px-8 mb-4 mt-20 text-center font-outfit text-lg md:text-xl lg:text-2xl p-4">
                     {' '}
                     <p className="p-4 text-l">
