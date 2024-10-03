@@ -10,7 +10,7 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    reset(); // Resetear el formulario al montar el componente
+    reset();
   }, [reset]);
 
   const onSubmit = async (data) => {
@@ -91,8 +91,7 @@ function Home() {
                 })}
                 placeholder="Ingresa tu email"
                 className={`block w-full rounded-md border-0 pl-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.email ? 'border-red-500' : ''}`}
-              />
-              {/* Mensaje de error para el email */}
+              />              
               {errors.email && <p className="text-red-600">{errors.email.message}</p>}
             </div>
 
@@ -102,8 +101,7 @@ function Home() {
                 type="password"
                 placeholder="Ingresa tu contraseña"
                 className={`block w-full rounded-md border-0 pl-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 ${errors.password ? 'border-red-500' : ''}`}
-              />
-              {/* Mensaje de error para la contraseña */}
+              />              
               {errors.password && <p className="text-red-600">{errors.password.message}</p>}
             </div>
 

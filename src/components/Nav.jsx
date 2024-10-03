@@ -81,7 +81,7 @@ const Nav = () => {
                     </li>
                     <li className="py-1 text-xl text-center">
                         <NavLink
-                            to="/logout"
+                            to="/"
                             className="text-black transition-transform duration-300 ease-in-out transform hover:scale-125 hover:text-gray-600"
                         >
                             Cerrar sesión
