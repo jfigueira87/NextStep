@@ -14,7 +14,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Adjust this to match your React app's URL
+    allow_origins=["http://localhost:3000"],  # Ajusta esto a la URL de tu aplicación React
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -116,11 +116,12 @@ def initialize_chatbot():
     )
 
     system = """
-    Eres un chatbot especializado en orientación laboral para jóvenes. Tu tarea es realizar una serie de preguntas predefinidas 
-    para obtener información sobre los intereses, habilidades y expectativas profesionales del usuario. Mantén un tono amigable 
+    Eres un chatbot especializado en orientación laboral para jóvenes. Tu tarea es realizar una serie de preguntas predefinidas
+    para obtener información sobre los intereses, habilidades y expectativas profesionales del usuario. Mantén un tono amigable
     y motivador, y adapta ligeramente las preguntas si es necesario basándote en las respuestas anteriores del usuario.
-    Saluda al usuario solo al inicio de la conversacion pero no saludes con cada pregunta que realices.
-    No hagas recomendaciones de carreras durante el proceso de preguntas. Tu objetivo es recopilar información para una 
+
+    No saludes al usuario en cada interacción, solo haz la pregunta directamente.
+    No hagas recomendaciones de carreras durante el proceso de preguntas. Tu objetivo es recopilar información para una
     recomendación de carrera precisa y personalizada al final de la entrevista.
     """
 
@@ -145,24 +146,25 @@ preguntas = [
 @app.post("/chat")
 async def chat(input: ChatInput):
     try:
-        # Determinar la pregunta actual basada en el contexto
         pregunta_index = len(input.context.split("\n")) if input.context else 0
         
         if pregunta_index >= len(preguntas):
-            # Si ya se han hecho todas las preguntas, dar la recomendación final
             recomendacion = recomendar_carrera(input.context + "\n" + input.message)
             return ChatOutput(response=recomendacion, is_final_recommendation=True)
 
-        # Actualizar el contexto con la respuesta del usuario
         updated_context = input.context + "\n" + input.message if input.context else input.message
-        
 
+        if pregunta_index == 0:
+            # Saludo inicial
+            saludo = "¡Hola! Bienvenido al chatbot de orientación vocacional. Vamos a explorar tus intereses y habilidades para ayudarte a encontrar la carrera ideal para ti."
+            pregunta_actual = preguntas[pregunta_index]
+            respuesta = f"{saludo}\n\n{pregunta_actual}"
+        else:
+            # Preguntas subsecuentes sin saludo
+            pregunta_actual = preguntas[pregunta_index]
+            respuesta = llm_chain.predict(pregunta=pregunta_actual)
 
-        # Generar la siguiente pregunta
-        pregunta_actual = preguntas[pregunta_index]
-        pregunta_adaptada = llm_chain.predict(pregunta=pregunta_actual)
-
-        return ChatOutput(response=pregunta_adaptada, is_final_recommendation=False)
+        return ChatOutput(response=respuesta, is_final_recommendation=False)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
