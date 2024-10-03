@@ -1,137 +1,124 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2'; // Importa SweetAlert
+import { postRegisterData } from '../services/services.js';
 
 function Register() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [errors, setErrors] = useState({});
-  const [successMessage, setSuccessMessage] = useState(false); 
+  const { register, handleSubmit, formState: { errors }, getValues } = useForm();
   const navigate = useNavigate(); 
 
-  const validateForm = (e) => {
-    e.preventDefault();
-    let validationErrors = {};
-    
-    if (!name) {
-      validationErrors.name = "El nombre es obligatorio";
-    }
+  const onSubmit = async (data) => {
+    try {
+      // Comprobar que las contraseñas coincidan
+      if (data.password !== data.confirmPassword) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Las contraseñas no coinciden.',
+        });
+        return;
+      }
 
-    if (!email) {
-      validationErrors.email = "El email es obligatorio";
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      validationErrors.email = "El email no es válido";
-    }
+      await postRegisterData(data);
 
-    if (!password) {
-      validationErrors.password = "La contraseña es obligatoria";
-    } else if (password.length < 6) {
-      validationErrors.password = "La contraseña debe tener al menos 6 caracteres";
-    }
+      // Muestra el SweetAlert de éxito
+      Swal.fire({
+        icon: 'success',
+        title: 'Te has registrado con éxito',
+        showConfirmButton: false,
+        timer: 2000, // Duración en milisegundos
+      });
 
-    if (password !== confirmPassword) {
-      validationErrors.confirmPassword = "Las contraseñas no coinciden";
-    }
-
-    if (Object.keys(validationErrors).length === 0) {
-    
-      setSuccessMessage(true);
       setTimeout(() => {
         navigate('/chatbot'); 
       }, 2000); 
-    } else {
-      setErrors(validationErrors);
+    } catch (error) {
+      console.error('Error al registrarse', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pudo completar el registro.',
+      });
     }
   };
 
   return (
     <> 
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-      <img
-        src={require('../assets/images/ellipseMobileBlue.png')}
-        alt="Ellipse Blue"
-        className="absolute top-0 left-0"
-      />
-      
-      <img
-        src={require('../assets/images/ellipseMobileGreen.png')}
-        alt="Ellipse Green"
-        className="absolute top-0 right-0"
-      />
-        <div className="absolute top-0 left-0 flex items-center m-8">
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mr-4">Acceso</h2>
         <img
-          src={require('../assets/images/User.png')}
-          alt="User"
-          className="w-5 h-5 sm:w-6 sm:h-6"
+          src={require('../assets/images/ellipseMobileBlue.png')}
+          alt="Ellipse Blue"
+          className="absolute top-0 left-0"
         />
-      </div>
+        
+        <img
+          src={require('../assets/images/ellipseMobileGreen.png')}
+          alt="Ellipse Green"
+          className="absolute top-0 right-0"
+        />
+        <div className="absolute top-0 left-0 flex items-center m-8">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mr-4">Registro</h2>
+          <img
+            src={require('../assets/images/User.png')}
+            alt="User"
+            className="w-5 h-5 sm:w-6 sm:h-6"
+          />
+        </div>
         <h2 className="mt-10 text-center text-xl font-bold leading-9 tracking-tight text-gray-900">Regístrate si aún no tienes una cuenta.</h2>
         
-        {successMessage && (
-          <div className="mt-4 text-center text-green-500">
-            Te has registrado con éxito.
-          </div>
-        )}
-
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={validateForm}>
+          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <input 
                 id="name" 
-                name="name" 
+                {...register("name", { required: "El nombre es obligatorio" })}
                 type="text" 
                 placeholder="Ingresa tu nombre" 
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required 
                 className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-              {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+              {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
             </div>
 
             <div>
               <input 
                 id="email" 
-                name="email" 
+                {...register("email", { 
+                  required: "El email es obligatorio", 
+                  pattern: { value: /\S+@\S+\.\S+/, message: "El email no es válido" } 
+                })}
                 type="email" 
                 placeholder="Ingresa tu email" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required 
                 className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-              {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+              {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
             </div>
 
             <div>
               <input 
                 id="password" 
-                name="password" 
+                {...register("password", { 
+                  required: "La contraseña es obligatoria", 
+                  minLength: { value: 6, message: "La contraseña debe tener al menos 6 caracteres" } 
+                })}
                 type="password" 
                 placeholder="Ingresa una contraseña" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required 
                 className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-              {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+              {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
             </div>
 
             <div>
               <input 
                 id="confirm-password" 
-                name="confirm-password" 
+                {...register("confirmPassword", { 
+                  required: "Confirma tu contraseña", 
+                })}
                 type="password" 
                 placeholder="Confirma tu contraseña" 
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required 
                 className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
-              {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
+              {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
             </div>
 
             <button 
@@ -167,11 +154,12 @@ function Register() {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             ¿Ya tienes una cuenta?
-            <Link to="Home /" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Entrar</Link>
+            <Link to="Home/" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Entrar</Link>
           </p>
         </div>
       </div>
     </>
-  )
+  );
 }
+
 export default Register;
