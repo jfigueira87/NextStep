@@ -62,7 +62,7 @@ function Register() {
         <div className="absolute top-0 left-0 flex items-center m-8">
         <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mr-4">Acceso</h2>
         <img
-          src={require('../assets/images/User.png')}
+          src={require('../assets/images/user.png')}
           alt="User"
           className="w-5 h-5 sm:w-6 sm:h-6"
         />
