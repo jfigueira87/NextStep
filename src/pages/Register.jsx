@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import Swal from 'sweetalert2'; // Importa SweetAlert
+import Swal from 'sweetalert2';
 import { postRegisterData } from '../services/services.js';
 
 function Register() {
@@ -10,7 +10,7 @@ function Register() {
 
   const onSubmit = async (data) => {
     try {
-      // Comprobar que las contraseñas coincidan
+
       if (data.password !== data.confirmPassword) {
         Swal.fire({
           icon: 'error',
@@ -22,12 +22,11 @@ function Register() {
 
       await postRegisterData(data);
 
-      // Muestra el SweetAlert de éxito
       Swal.fire({
         icon: 'success',
         title: 'Te has registrado con éxito',
         showConfirmButton: false,
-        timer: 2000, // Duración en milisegundos
+        timer: 2000, 
       });
 
       setTimeout(() => {
