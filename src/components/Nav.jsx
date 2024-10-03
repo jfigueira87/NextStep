@@ -54,7 +54,7 @@ const Nav = () => {
                 </div>
             </nav>
             <div
-                className={`fixed right-0 top-[72px] w-full h-[18vh] bg-blue-200 bg-opacity-80 backdrop-blur-lg text-gray shadow-2xl z-40 transition-all ${
+                className={`fixed right-0 top-[55px] w-full h-[18vh] bg-blue-200 bg-opacity-80 backdrop-blur-lg text-gray shadow-2xl z-40 transition-all ${
                     isMenuOpen
                         ? 'duration-700 ease-in-out'
                         : 'duration-300 ease-in'
