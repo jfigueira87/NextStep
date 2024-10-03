@@ -158,7 +158,7 @@ function Register() {
             />
           </div>
 
-          <p className="mt-10 text-center text-sm text-gray-500">
+          <p className="mt-7 text-center text-sm text-gray-500">
             ¿Ya tienes una cuenta?
             <Link to="/" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Entrar</Link>
           </p>
