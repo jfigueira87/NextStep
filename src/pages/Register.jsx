@@ -7,43 +7,39 @@ function Register() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
-  const [successMessage, setSuccessMessage] = useState(false); // Estado para el mensaje de éxito
-  const navigate = useNavigate(); // Hook para la navegación
+  const [successMessage, setSuccessMessage] = useState(false); 
+  const navigate = useNavigate(); 
 
   const validateForm = (e) => {
     e.preventDefault();
     let validationErrors = {};
     
-    // Validación del nombre
     if (!name) {
       validationErrors.name = "El nombre es obligatorio";
     }
 
-    // Validación del email
     if (!email) {
       validationErrors.email = "El email es obligatorio";
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       validationErrors.email = "El email no es válido";
     }
 
-    // Validación de la contraseña
     if (!password) {
       validationErrors.password = "La contraseña es obligatoria";
     } else if (password.length < 6) {
       validationErrors.password = "La contraseña debe tener al menos 6 caracteres";
     }
 
-    // Validación de confirmación de contraseña
     if (password !== confirmPassword) {
       validationErrors.confirmPassword = "Las contraseñas no coinciden";
     }
 
     if (Object.keys(validationErrors).length === 0) {
-      // Si no hay errores, mostrar mensaje de éxito y redirigir
+    
       setSuccessMessage(true);
       setTimeout(() => {
-        navigate('/chatbot'); // Redirigir a la página del chatbot
-      }, 2000); // Esperar 2 segundos antes de redirigir
+        navigate('/chatbot'); 
+      }, 2000); 
     } else {
       setErrors(validationErrors);
     }
@@ -52,6 +48,17 @@ function Register() {
   return (
     <> 
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+      <img
+        src={require('../assets/images/ellipseMobileBlue.png')}
+        alt="Ellipse Blue"
+        className="absolute top-0 left-0"
+      />
+      
+      <img
+        src={require('../assets/images/ellipseMobileGreen.png')}
+        alt="Ellipse Green"
+        className="absolute top-0 right-0"
+      />
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-gray-900">Registro</h2>
           <img className="mx-auto h-60 w-auto" src={require('../assets/images/logoNextstep.png')} alt="Company logo" />
@@ -60,7 +67,7 @@ function Register() {
         
         {successMessage && (
           <div className="mt-4 text-center text-green-500">
-            Te has registrado con éxito. Redirigiendo a la página del chatbot...
+            Te has registrado con éxito.
           </div>
         )}
 
@@ -75,7 +82,7 @@ function Register() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required 
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
             </div>
@@ -89,7 +96,7 @@ function Register() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required 
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
             </div>
@@ -103,7 +110,7 @@ function Register() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required 
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
             </div>
@@ -117,7 +124,7 @@ function Register() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required 
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
             </div>
@@ -162,5 +169,4 @@ function Register() {
     </>
   )
 }
-
 export default Register;

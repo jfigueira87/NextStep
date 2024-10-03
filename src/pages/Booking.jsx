@@ -9,49 +9,43 @@ function Booking() {
   const [appointmentTime, setAppointmentTime] = useState('');
   const [note, setNote] = useState('');
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate(); // Hook para la navegación
+  const navigate = useNavigate();
 
   const validateForm = (e) => {
     e.preventDefault();
     let validationErrors = {};
 
-    // Validación del nombre completo
     if (!fullName) {
-      validationErrors.fullName = true; // Solo se guarda la condición
-    } else if (!/^[A-Za-záéíóúÁÉÍÓÚÑñ\s]+$/.test(fullName)) { // Solo letras y espacios
+      validationErrors.fullName = true; 
+    } else if (!/^[A-Za-záéíóúÁÉÍÓÚÑñ\s]+$/.test(fullName)) { 
       validationErrors.fullName = "El nombre solo debe contener letras y espacios.";
     }
 
-    // Validación del número de teléfono
+ 
     if (!phoneNumber) {
-      validationErrors.phoneNumber = true; // Solo se guarda la condición
-    } else if (!/^\d{9}$/.test(phoneNumber)) { // Validación de que el teléfono tenga exactamente 9 dígitos
-      if (!/^\d+$/.test(phoneNumber)) { // Verificar si contiene solo números
+      validationErrors.phoneNumber = true; 
+    } else if (!/^\d{9}$/.test(phoneNumber)) { 
+      if (!/^\d+$/.test(phoneNumber)) { 
         Swal.fire({
           title: 'Error',
           text: 'Debes añadir un número de teléfono.',
           icon: 'error',
           confirmButtonText: 'Aceptar',
-          background: '#f8d7da', // Color de fondo
-          color: '#721c24', // Color del texto
-          confirmButtonColor: '#dc3545' // Color del botón
         });
       }
       validationErrors.phoneNumber = "El número de teléfono debe tener exactamente 9 dígitos.";
     }
 
-    // Validación de la fecha de la cita
+  
     if (!appointmentDate) {
-      validationErrors.appointmentDate = true; // Solo se guarda la condición
+      validationErrors.appointmentDate = true; 
     }
 
-    // Validación de la hora de la cita
     if (!appointmentTime) {
-      validationErrors.appointmentTime = true; // Solo se guarda la condición
+      validationErrors.appointmentTime = true;
     }
 
     if (Object.keys(validationErrors).length === 0) {
-      // Si no hay errores, mostrar mensaje de éxito y redirigir
       Swal.fire({
         title: 'Reserva con éxito!',
         text: 'Tu cita ha sido reservada. Redirigiendo a la página del chatbot...',
@@ -62,19 +56,16 @@ function Booking() {
       });
 
       setTimeout(() => {
-        navigate('/chatbot'); // Redirigir a la página del chatbot
-      }, 2000); // Esperar 2 segundos antes de redirigir
+        navigate('/chatbot'); 
+      }, 2000);
     } else {
-      // Mostrar mensajes de error específicos usando SweetAlert2
+     
       if (validationErrors.fullName) {
         Swal.fire({
           title: 'Campo obligatorio',
           text: 'Debes completar este campo: Nombre y Apellidos.',
           icon: 'warning',
           confirmButtonText: 'Aceptar',
-          background: '#fff3cd', // Color de fondo
-          color: '#856404', // Color del texto
-          confirmButtonColor: '#ffc107' // Color del botón
         });
       }
 
@@ -84,9 +75,6 @@ function Booking() {
           text: 'Debes completar este campo: Número de teléfono.',
           icon: 'warning',
           confirmButtonText: 'Aceptar',
-          background: '#fff3cd', // Color de fondo
-          color: '#856404', // Color del texto
-          confirmButtonColor: '#ffc107' // Color del botón
         });
       }
 
@@ -95,10 +83,6 @@ function Booking() {
           title: 'Campo obligatorio',
           text: 'Debes completar este campo: Fecha de la cita.',
           icon: 'warning',
-          confirmButtonText: 'Aceptar',
-          background: '#fff3cd', // Color de fondo
-          color: '#856404', // Color del texto
-          confirmButtonColor: '#ffc107' // Color del botón
         });
       }
 
@@ -108,9 +92,6 @@ function Booking() {
           text: 'Debes completar este campo: Hora de la cita.',
           icon: 'warning',
           confirmButtonText: 'Aceptar',
-          background: '#fff3cd', // Color de fondo
-          color: '#856404', // Color del texto
-          confirmButtonColor: '#ffc107' // Color del botón
         });
       }
 
@@ -118,11 +99,11 @@ function Booking() {
     }
   };
 
-  // Fechas mínimas y máximas para el calendario
-  const minDate = new Date(2024, 9, 1).toISOString().split('T')[0]; // 1 de octubre de 2024
-  const maxDate = new Date(2026, 11, 31).toISOString().split('T')[0]; // 31 de diciembre de 2026
+ 
+  const minDate = new Date(2024, 9, 1).toISOString().split('T')[0];
+  const maxDate = new Date(2026, 11, 31).toISOString().split('T')[0]; 
 
-  // Generar opciones de horarios de 8:00 a 20:00
+  
   const generateTimeOptions = () => {
     const options = [];
     for (let hour = 8; hour <= 20; hour++) {
@@ -145,11 +126,23 @@ function Booking() {
   return (
     <>  
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+      <img
+        src={require('../assets/images/ellipseMobileBlue.png')}
+        alt="Ellipse Blue"
+        className="absolute top-0 left-0"
+      />
+      
+      <img
+        src={require('../assets/images/ellipseMobileGreen.png')}
+        alt="Ellipse Green"
+        className="absolute top-0 right-0"
+      />
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="mx-auto h-60 w-auto" src={require('../assets/images/logoNextstep.png')} alt="Company logo" />
         </div>
-        <h2 className="mt-10 text-center text-xl font-bold leading-9 tracking-tight text-gray-900">Reserva una cita con tu orientador</h2>
-
+        <h2 className="mt-2 text-center text-xl font-bold leading-9 tracking-tight text-gray-900">
+        Reserva una cita con tu orientador
+        </h2>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={validateForm}>
             <div>
@@ -161,7 +154,7 @@ function Booking() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 required 
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               {errors.fullName && <p className="text-red-500 text-sm">{errors.fullName}</p>}
             </div>
@@ -175,7 +168,7 @@ function Booking() {
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 required 
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               {errors.phoneNumber && <p className="text-red-500 text-sm">{errors.phoneNumber}</p>}
             </div>
@@ -185,12 +178,12 @@ function Booking() {
                 id="appointment-date" 
                 name="appointment-date" 
                 type="date" 
-                min={minDate} // Establecer la fecha mínima
-                max={maxDate} // Establecer la fecha máxima
+                min={minDate}
+                max={maxDate} 
                 value={appointmentDate}
                 onChange={(e) => setAppointmentDate(e.target.value)}
                 required 
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               {errors.appointmentDate && <p className="text-red-500 text-sm">{errors.appointmentDate}</p>}
             </div>
@@ -202,7 +195,7 @@ function Booking() {
                 value={appointmentTime}
                 onChange={(e) => setAppointmentTime(e.target.value)}
                 required 
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               >
                 <option value="" disabled>Selecciona una hora</option>
                 {generateTimeOptions()}
@@ -217,14 +210,14 @@ function Booking() {
                 placeholder="Nota (opcional)" 
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md p-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
 
             <button 
               type="submit" 
               className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-bold leading-6" 
-              style={{ backgroundColor: '#B0EFFF', color: '#054D41' }} // Cambiamos el color del texto aquí
+              style={{ backgroundColor: '#B0EFFF', color: '#054D41' }}
             >
               Reservar Cita
             </button>
