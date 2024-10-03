@@ -13,3 +13,11 @@ export const postRegisterData = async (data) => {
       throw error;
   }
 }
+export async function getAllusers() {
+  try {
+    const response = await axios.get(URL_API);
+    return response.data;
+  } catch (error) {
+    console.error('Error en la solicitud:', error);
+  }
+};
