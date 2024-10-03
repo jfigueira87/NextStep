@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { postRegisterData } from '../services/services.js';
 
 function Register() {
-  const { register, handleSubmit, formState: { errors }, getValues } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate(); 
 
   const onSubmit = async (data) => {
@@ -59,7 +59,7 @@ function Register() {
         <div className="absolute top-0 left-0 flex items-center m-8">
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mr-4">Registro</h2>
           <img
-            src={require('../assets/images/User.png')}
+            src={require('../assets/images/user.png')}
             alt="User"
             className="w-5 h-5 sm:w-6 sm:h-6"
           />

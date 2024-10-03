@@ -15,7 +15,7 @@ export const postRegisterData = async (data) => {
 }
 export async function getAllusers() {
   try {
-    const response = await axios.get(URL_API);
+    const response = await axios.get(URL);
     return response.data;
   } catch (error) {
     console.error('Error en la solicitud:', error);
