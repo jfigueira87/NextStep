@@ -16,9 +16,9 @@ const Nav = () => {
                 <div className="flex items-center ml-[4%]">
                     <NavLink to="/">
                         <img
-                            src={require('../assets/images/logoNextstep.png')}
+                            src={require('../assets/images/logoNextstepNav.png')}
                             alt="Logo"
-                            className="w-24 h-24"
+                            className="w-24 h-18 my-1"
                         />
                     </NavLink>
                 </div>

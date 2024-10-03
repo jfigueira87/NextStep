@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
-import { getAllusers } from '../services/services.js'; 
+import { getAllusers } from '../services/services.js';
 import '../index.css';
 
 function Home() {
@@ -49,7 +49,7 @@ function Home() {
   };
 
   return (
-    <div className="relative min-h-screen bg-white">
+    <div className="relative bg-white">
       <img
         src={require('../assets/images/ellipseMobileBlue.png')}
         alt="Ellipse Blue"
@@ -137,11 +137,14 @@ function Home() {
             />
           </div>
 
-          <p className="mt-10 text-center text-sm text-gray-500">
-            ¿Ya tienes una cuenta?
-            <Link to="/home" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-              Entrar
-            </Link>
+          <p className="m-6 text-center text-sm text-gray-500">
+            Crea tu cuenta con NextStep {' '}
+            <span
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 cursor-pointer"
+              onClick={() => navigate('/register')}
+            >
+              Aquí
+            </span>
           </p>
         </div>
       </div>
