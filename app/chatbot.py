@@ -118,11 +118,13 @@ def initialize_chatbot():
     system = """
     Eres un chatbot especializado en orientación laboral para jóvenes. Tu tarea es realizar una serie de preguntas predefinidas
     para obtener información sobre los intereses, habilidades y expectativas profesionales del usuario. Mantén un tono amigable
-    y motivador, y adapta ligeramente las preguntas si es necesario basándote en las respuestas anteriores del usuario.
+    y motivador. Adapta las preguntas basándote en las respuestas anteriores del usuario.
 
-    No saludes al usuario en cada interacción, solo haz la pregunta directamente.
     No hagas recomendaciones de carreras durante el proceso de preguntas. Tu objetivo es recopilar información para una
     recomendación de carrera precisa y personalizada al final de la entrevista.
+
+    Cuando se te proporcione una respuesta del usuario, tu tarea es hacer la siguiente pregunta de manera natural,
+    teniendo en cuenta lo que el usuario ha dicho.
     """
 
     prompt = ChatPromptTemplate.from_messages([("system", system), ("human", "{pregunta}")])
@@ -146,28 +148,33 @@ preguntas = [
 @app.post("/chat")
 async def chat(input: ChatInput):
     try:
+        # Determinar la pregunta actual basada en el contexto
         pregunta_index = len(input.context.split("\n")) if input.context else 0
         
         if pregunta_index >= len(preguntas):
+            # Si ya se han hecho todas las preguntas, dar la recomendación final
             recomendacion = recomendar_carrera(input.context + "\n" + input.message)
             return ChatOutput(response=recomendacion, is_final_recommendation=True)
 
+        # Actualizar el contexto con la respuesta del usuario
         updated_context = input.context + "\n" + input.message if input.context else input.message
 
+        # Generar la siguiente pregunta
         if pregunta_index == 0:
-            # Saludo inicial
+            # Primera interacción: saludo + primera pregunta
             saludo = "¡Hola! Bienvenido al chatbot de orientación vocacional. Vamos a explorar tus intereses y habilidades para ayudarte a encontrar la carrera ideal para ti."
-            pregunta_actual = preguntas[pregunta_index]
-            respuesta = f"{saludo}\n\n{pregunta_actual}"
+            pregunta_actual = preguntas[0]
+            respuesta = f"{saludo} {pregunta_actual}"
         else:
-            # Preguntas subsecuentes sin saludo
+            # Interacciones subsiguientes
             pregunta_actual = preguntas[pregunta_index]
-            respuesta = llm_chain.predict(pregunta=pregunta_actual)
+            prompt = f"El usuario ha respondido: '{input.message}'. Basándote en esta respuesta, haz la siguiente pregunta de manera natural: {pregunta_actual}"
+            respuesta = llm_chain.predict(pregunta=prompt)
 
         return ChatOutput(response=respuesta, is_final_recommendation=False)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
+    
 @app.get("/")
 async def root():
     return {"message": "Bienvenido al chatbot de orientación vocacional"}
