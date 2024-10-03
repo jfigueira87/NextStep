@@ -22,7 +22,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "concurrently \"npm run api\" \"npm run dev:vite\"",
+    "api": "json-server --watch database/db.json --port 4000",
+    "dev:vite": "vite"
   },
   "browserslist": {
     "production": [
@@ -38,6 +41,8 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
+    "concurrently": "^9.0.1",
+    "json-server": "^1.0.0-beta.3",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.13",
     "vite": "^5.4.8",
