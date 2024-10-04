@@ -1,0 +1,39 @@
+Script started on Fri Oct  4 11:44:13 2024
+[1m[7m%[27m[1m[0m                                                                               [0m[27m[24m[Jpepe@Pepe-MacBook-Pro NextStep % [K[?2004hppython3      p  [7mpython app/chatbot.py[27m[21D[27mp[27my[27mt[27mh[27mo[27mn[27m [27ma[27mp[27mp[27m/[27mc[27mh[27ma[27mt[27mb[27mo[27mt[27m.[27mp[27my3 app/chatbot.py[15D[?2004l
+/Users/pepe/Documents/hackaton/NextStep/app/chatbot.py:131: LangChainDeprecationWarning: The class `LLMChain` was deprecated in LangChain 0.1.17 and will be removed in 1.0. Use :meth:`~RunnableSequence, e.g., `prompt | llm`` instead.
+  return LLMChain(llm=llm, prompt=prompt)
+[32mINFO[0m:     Started server process [[36m21751[0m]
+[32mINFO[0m:     Waiting for application startup.
+[32mINFO[0m:     Application startup complete.
+[32mINFO[0m:     Uvicorn running on [1mhttp://localhost:8000[0m (Press CTRL+C to quit)
+[32mINFO[0m:     ::1:51210 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51211 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51213 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51221 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51221 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51223 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51225 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51227 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51230 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51232 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51234 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51236 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51238 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51245 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51249 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51530 - "[1mOPTIONS /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51535 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51689 - "[1mOPTIONS /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51690 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51752 - "[1mOPTIONS /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51753 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51867 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51869 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51871 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51873 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51875 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51877 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51879 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51881 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51883 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
+[32mINFO[0m:     ::1:51890 - "[1mPOST /chat HTTP/1.1[0m" [32m200 OK[0m
