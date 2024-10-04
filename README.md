@@ -1,6 +1,6 @@
 # NextStep 🥇
 
-¡Bienvenido a NextStep, una plataforma innovadora de orientación vocacional! 🌟 Nuestro proyecto está diseñado para ayudar a jóvenes de 18 a 24 años a elegir o redefinir su carrera profesional a través de un chatbot interactivo basado en inteligencia artificial.
+¡Bienvenido a NextStep, una plataforma innovadora de orientación vocacional! 🌟 Este proyecto está diseñado para ayudar a jóvenes de 18 a 24 años a elegir o redefinir su carrera profesional a través de un chatbot interactivo basado en inteligencia artificial.
 
 ![Example Chat](./src/assets/images/logo_readme.png)
 
