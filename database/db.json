@@ -139,6 +139,13 @@
       "email": "andres.blanco@example.com",
       "password": "password123",
       "confirmedPassword": "password123"
+    },
+    {
+      "id": "f1f9",
+      "name": "Jose Ruiz",
+      "email": "jorsqn@gmail.com",
+      "password": "lakikawapa1",
+      "confirmedPassword": "lakikawapa1"
     }
   ]
 }
